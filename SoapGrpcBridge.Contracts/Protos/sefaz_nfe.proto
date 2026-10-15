@@ -6,7 +6,7 @@ package sefaz.nfe.v1;
 
 service NfeAuthorizationService {
   rpc AutorizarNfe(AutorizarNfeRequest) returns (AutorizarNfeResponse);
-  rpc ConsultarStatusServico(StatusServicoRequest) returns (StatusServicoResponse);
+  rpc ConsultarStatusServico(ConsultarStatusServicoRequest) returns (ConsultarStatusServicoResponse);
 }
 
 message AutorizarNfeRequest {
@@ -17,20 +17,19 @@ message AutorizarNfeRequest {
 }
 
 message AutorizarNfeResponse {
-  int32 cUF = 1;
-  string nRec = 2;
-  string nProt = 3;
-  string cStat = 4;
-  string xMotivo = 5;
+  string nRec = 1;
+  string nProt = 2;
+  int32 cStat = 3;
+  string xMotivo = 4;
 }
 
-message StatusServicoRequest {
+message ConsultarStatusServicoRequest {
   int32 cUF = 1;
   int32 tpAmb = 2;
 }
 
-message StatusServicoResponse {
-  string cStat = 1;
+message ConsultarStatusServicoResponse {
+  int32 cStat = 1;
   string xMotivo = 2;
   string dhRecbto = 3;
   string versao = 4;

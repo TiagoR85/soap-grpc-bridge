@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "SoapGrpcBridge.Contracts.Sefaz.Nfe.V1";
+
+package sefaz.nfe.v1;
+
+service NfeAuthorizationService {
+  rpc AutorizarNfe(AutorizarNfeRequest) returns (AutorizarNfeResponse);
+  rpc ConsultarStatusServico(StatusServicoRequest) returns (StatusServicoResponse);
+}
+
+message AutorizarNfeRequest {
+  int32 cUF = 1;
+  string idLote = 2;
+  int32 tpAmb = 3;
+  repeated string chaves = 4;
+}
+
+message AutorizarNfeResponse {
+  int32 cUF = 1;
+  string nRec = 2;
+  string nProt = 3;
+  string cStat = 4;
+  string xMotivo = 5;
+}
+
+message StatusServicoRequest {
+  int32 cUF = 1;
+  int32 tpAmb = 2;
+}
+
+message StatusServicoResponse {
+  string cStat = 1;
+  string xMotivo = 2;
+  string dhRecbto = 3;
+  string versao = 4;
+}

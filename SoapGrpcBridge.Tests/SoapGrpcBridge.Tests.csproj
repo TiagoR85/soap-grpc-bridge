@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);NU1608</NoWarn>
+    <Exclude>[*]*SoapGrpcBridge.Tests.*,[*]*SoapGrpcBridge.Contracts.*</Exclude>
+  </PropertyGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Google.Protobuf" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="coverlet.msbuild" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="System.ServiceModel.Http" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+    <PackageReference Include="System.Security.Cryptography.Xml" />
+    <PackageReference Include="WireMock.Net" />
+    <PackageReference Include="WireMock.Net.ProtoBuf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SoapGrpcBridge.Host\SoapGrpcBridge.Host.csproj" />
+    <ProjectReference Include="..\SoapGrpcBridge.Contracts\SoapGrpcBridge.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SoapGrpcBridge.Contracts\Protos\sefaz_nfe.proto" Link="Protos\sefaz_nfe.proto" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

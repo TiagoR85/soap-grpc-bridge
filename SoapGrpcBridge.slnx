@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="SoapGrpcBridge.Contracts/SoapGrpcBridge.Contracts.csproj" />
+  <Project Path="SoapGrpcBridge.Host/SoapGrpcBridge.Host.csproj" />
+  <Project Path="SoapGrpcBridge.Tests/SoapGrpcBridge.Tests.csproj" />
+</Solution>

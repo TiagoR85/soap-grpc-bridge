@@ -1,10 +1,10 @@
-# ADR-0002 â€” gRPC status â†’ SOAP Fault mapping with stable codes
+# ADR-0002 — gRPC status → SOAP Fault mapping with stable codes
 
-**Date:** 2026-10-15 Â· **Status:** Accepted
+**Date:** 2026-10-15 · **Status:** Accepted
 
 ## Context
 
-The backend speaks gRPC; the ERP consumes SOAP faults. Operators and tests need deterministic identifiers to branch on, and the real SEFAZ sends business rejections (`cStat`â‰ 100) as *normal responses*, not faults.
+The backend speaks gRPC; the ERP consumes SOAP faults. Operators and tests need deterministic identifiers to branch on, and the real SEFAZ sends business rejections (`cStat`≠100) as *normal responses*, not faults.
 
 ## Decision
 
@@ -22,6 +22,6 @@ The fault **reason string always contains the code** (`"SEFAZ:..."`), so tests a
 
 ## Consequences
 
-- Tests and runbooks depend only on the `SEFAZ:*` strings â€” transport/message details can change freely.
+- Tests and runbooks depend only on the `SEFAZ:*` strings — transport/message details can change freely.
 - One catch-all for "other gRPC statuses" keeps the contract closed (YAGNI: no `SEFAZ:Cancelled` etc. until a real need appears).
 - Known deviation: CoreWCF returns HTTP 500 for every SOAP fault (a `Client` fault would ideally be 400); the stable fault code carries the client/server distinction instead.

@@ -29,7 +29,7 @@ public sealed class SefazStubFixture : IAsyncLifetime
     private static async Task WaitForHttp2ReadyAsync(string grpcUrl, int maxAttempts = 20, int delayMs = 100)
     {
         using var http = new HttpClient { DefaultRequestVersion = System.Net.HttpVersion.Version20 };
-        
+
         for (int attempt = 1; attempt <= maxAttempts; attempt++)
         {
             try
@@ -48,10 +48,10 @@ public sealed class SefazStubFixture : IAsyncLifetime
             catch (TaskCanceledException)
             {
             }
-            
+
             await Task.Delay(delayMs);
         }
-        
+
         throw new InvalidOperationException($"WireMock HTTP/2 endpoint at {grpcUrl} did not become ready after {maxAttempts} attempts");
     }
 

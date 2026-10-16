@@ -1,6 +1,6 @@
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
-using Moq;
+using Microsoft.Extensions.Logging.Abstractions;
 using SoapGrpcBridge.Host.Contracts;
 using SoapGrpcBridge.Host.Sefaz;
 
@@ -12,8 +12,7 @@ public sealed class FaultTranslatorTests
 
     public FaultTranslatorTests()
     {
-        var loggerMock = new Mock<ILogger<FaultTranslator>>();
-        _translator = new FaultTranslator(loggerMock.Object);
+        _translator = new FaultTranslator(NullLogger<FaultTranslator>.Instance);
     }
 
     [Fact]

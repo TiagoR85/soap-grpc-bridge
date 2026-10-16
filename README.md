@@ -57,7 +57,7 @@ Defaults live in `appsettings.json`; see `.env.example` (placeholders only).
 
 ## How it works
 
-- **Wire-real tests in-process**: `WebApplicationFactory<Program>` + `WithWebHostBuilder(builder => builder.UseUrls($"http://127.0.0.1:{FreePort.Get()}"))` + `factory.UseKestrel()` runs the host on a real dynamic Kestrel port so a genuine `ChannelFactory` SOAP client talks to it — see [ADR-0003](docs/adr/ADR-0003-test-topology.md).
+- **Wire-real tests in-process**: `WebApplicationFactory<Program>` + `WithWebHostBuilder(builder => builder.UseUrls($"http://127.0.0.1:{SoapGrpcBridge.Tests.Infrastructure.FreePort.Get()}"))` + `factory.UseKestrel()` runs the host on a real dynamic Kestrel port so a genuine `ChannelFactory` SOAP client talks to it — see [ADR-0003](docs/adr/ADR-0003-test-topology.md).
 - **Stable fault contract**: every gRPC failure is classified once in `FaultTranslator`; fault codes are asserted by string, never by message text — see [ADR-0002](docs/adr/ADR-0002-grpc-to-soap-fault-mapping.md).
 - **CoreWCF over SoapCore**: full SOAP 1.2 + WSDL support on .NET 10 with the WCF programming model the market expects — see [ADR-0001](docs/adr/ADR-0001-corewcf-soap-server.md).
 - **Coverage gate**: Coverlet excludes `Tests` and generated `Contracts` namespaces — the 80% line gate measures `SoapGrpcBridge.Host` only.

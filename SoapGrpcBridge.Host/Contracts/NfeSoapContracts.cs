@@ -31,7 +31,10 @@ public sealed class AutorizarNfeRequest
     [DataMember(Name = "chaves")] public string[] chaves { get; set; } = [];
 }
 
-[DataContract(Namespace = ContractNames.Namespace, Name = "AutorizarNfeResponse")]
+// Nome do DataContract NAO pode ser "AutorizarNfeResponse": o CoreWCF gera o
+// wrapper de resposta como operationName + "Response" no mesmo namespace,
+// causando "global element already been declared" na exportacao do WSDL.
+[DataContract(Namespace = ContractNames.Namespace, Name = "AutorizarNfeResponseData")]
 public sealed class AutorizarNfeResponse
 {
     [DataMember(Name = "nRec")] public string nRec { get; set; } = string.Empty;
@@ -47,7 +50,7 @@ public sealed class ConsultarStatusServicoRequest
     [DataMember(Name = "tpAmb")] public int tpAmb { get; set; }
 }
 
-[DataContract(Namespace = ContractNames.Namespace, Name = "ConsultarStatusServicoResponse")]
+[DataContract(Namespace = ContractNames.Namespace, Name = "ConsultarStatusServicoResponseData")]
 public sealed class ConsultarStatusServicoResponse
 {
     [DataMember(Name = "cStat")] public int cStat { get; set; }

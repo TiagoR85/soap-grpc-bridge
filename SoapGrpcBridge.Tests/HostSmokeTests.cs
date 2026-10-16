@@ -15,7 +15,8 @@ public sealed class HostSmokeTests : IClassFixture<WebApplicationFactory<Program
 
         var response = await client.GetAsync("/health");
 
-        response.EnsureSuccessStatusCode();
-        Assert.Equal("\"ok\"", await response.Content.ReadAsStringAsync());
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.True(response.IsSuccessStatusCode, $"status={(int)response.StatusCode} body={body}");
+        Assert.Equal("\"ok\"", body);
     }
 }

@@ -1,4 +1,6 @@
 using Grpc.Core;
+using Microsoft.Extensions.Logging;
+using Moq;
 using SoapGrpcBridge.Host.Contracts;
 using SoapGrpcBridge.Host.Sefaz;
 
@@ -6,12 +8,20 @@ namespace SoapGrpcBridge.Tests.Sefaz;
 
 public sealed class FaultTranslatorTests
 {
+    private readonly FaultTranslator _translator;
+
+    public FaultTranslatorTests()
+    {
+        var loggerMock = new Mock<ILogger<FaultTranslator>>();
+        _translator = new FaultTranslator(loggerMock.Object);
+    }
+
     [Fact]
     public void Unavailable_maps_to_backend_unavailable_server_fault()
     {
         var exception = new RpcException(new Status(StatusCode.Unavailable, "connection refused"));
 
-        var fault = FaultTranslator.ToFault(exception);
+        var fault = _translator.ToFault(exception);
 
         Assert.Equal("Server", fault.Code.Name);
         Assert.Equal(SefazFault.BackendUnavailableCode, fault.Code.SubCode?.Name);
@@ -23,7 +33,7 @@ public sealed class FaultTranslatorTests
     {
         var exception = new RpcException(new Status(StatusCode.DeadlineExceeded, "deadline exceeded"));
 
-        var fault = FaultTranslator.ToFault(exception);
+        var fault = _translator.ToFault(exception);
 
         Assert.Equal("Server", fault.Code.Name);
         Assert.Equal(SefazFault.TimeoutCode, fault.Code.SubCode?.Name);
@@ -34,7 +44,7 @@ public sealed class FaultTranslatorTests
     {
         var exception = new RpcException(new Status(StatusCode.Internal, "boom"));
 
-        var fault = FaultTranslator.ToFault(exception);
+        var fault = _translator.ToFault(exception);
 
         Assert.Equal(SefazFault.BackendUnavailableCode, fault.Code.SubCode?.Name);
     }

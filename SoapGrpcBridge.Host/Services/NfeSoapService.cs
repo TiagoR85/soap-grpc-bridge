@@ -9,11 +9,13 @@ namespace SoapGrpcBridge.Host.Services;
 public sealed class NfeSoapService : INfeAuthorizationService
 {
     private readonly SefazGrpcClient _sefaz;
+    private readonly FaultTranslator _faultTranslator;
     private readonly ILogger<NfeSoapService> _logger;
 
-    public NfeSoapService(SefazGrpcClient sefaz, ILogger<NfeSoapService> logger)
+    public NfeSoapService(SefazGrpcClient sefaz, FaultTranslator faultTranslator, ILogger<NfeSoapService> logger)
     {
         _sefaz = sefaz;
+        _faultTranslator = faultTranslator;
         _logger = logger;
     }
 
@@ -39,7 +41,7 @@ public sealed class NfeSoapService : INfeAuthorizationService
         catch (RpcException ex)
         {
             _logger.LogWarning(ex, "Backend gRPC falhou em AutorizarNfe");
-            throw FaultTranslator.ToFault(ex);
+            throw _faultTranslator.ToFault(ex);
         }
     }
 
@@ -58,7 +60,7 @@ public sealed class NfeSoapService : INfeAuthorizationService
         catch (RpcException ex)
         {
             _logger.LogWarning(ex, "Backend gRPC falhou em ConsultarStatusServico");
-            throw FaultTranslator.ToFault(ex);
+            throw _faultTranslator.ToFault(ex);
         }
     }
 }
